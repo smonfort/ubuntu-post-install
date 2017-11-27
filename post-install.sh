@@ -19,6 +19,7 @@ options=(	10 "Base - Prérequis" off
 			50 "Cloud - Docker / Docker Compose" off
 			51 "Cloud - Kubernetes - Helm CLI" off
 			52 "Cloud - AWS / Google CLI" off
+			53 "Cloud - Kops" off
 			60 "Tools - Postman" off
 		)
 choices=$("${cmd[@]}" "${options[@]}" 2>&1 >/dev/tty)
@@ -142,6 +143,14 @@ do
 			echo "deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
 			curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 			sudo apt update && sudo apt install -y google-cloud-sdk
+			;;
+
+		53)
+			# Kops
+			echo "Installing kops"
+			curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+			chmod +x kops-linux-amd64
+			sudo mv kops-linux-amd64 /usr/local/bin/kops
 			;;
 
 		############################################
