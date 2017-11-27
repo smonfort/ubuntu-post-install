@@ -17,7 +17,7 @@ options=(	10 "Base - Prérequis" off
 			32 "Language - Java toolchain" off
 			40 "Browser - Google Chrome" off
 			50 "Cloud - Docker / Docker Compose" off
-			51 "Cloud - Kubernetes CLI" off
+			51 "Cloud - Kubernetes - Helm CLI" off
 			52 "Cloud - AWS / Google CLI" off
 			60 "Tools - Postman" off
 		)
@@ -55,6 +55,8 @@ do
 			# Install Visual Studio Code
 			echo "Installing Visual Studio Code"
 			umake web visual-studio-code ${HOME}/vscode
+			echo "PATH=$PATH:${HOME}/vscode/bin" >> ~/.profile
+			source ~/.profile
 			;;
 		22)
 			# Install Android Studio
@@ -81,7 +83,7 @@ do
 		31)
 			# Node tools
 			echo "Installing node tooling"
-			npm install grunt gulp -g
+			npm install -g grunt gulp
 			;;
 		32)
 			# Java toolchain : JDK 8 + Maven + Gradle
@@ -123,9 +125,11 @@ do
 			sudo chmod +x /usr/local/bin/docker-compose
 			;;
 
-		51) # Kubernetes CLI
+		51) # Kubernetes & Helm CLI
 			echo "Install kubectl command line"
 			sudo snap install kubectl --classic
+			echo "Install Helm"
+			curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
 			;;
 
 		52)
